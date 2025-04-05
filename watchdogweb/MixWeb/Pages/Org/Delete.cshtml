@@ -1,0 +1,42 @@
+﻿@page
+@model MixWeb.Pages.Org.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    ViewData["Page"] = "org";
+    ViewData["user"] = this.User;
+}
+<div class="pd-20 card-box mb-30">
+    <div class="pd-20">
+        <h3>你確定要刪除這個商戶？</h3>
+        <hr />
+        <h4 class="text-blue h4">刪除商戶</h4>
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            商戶
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model =>model.Morg.Org)
+        </dd>
+        <dt class="col-sm-2">
+            TG Bot
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model =>model.Morg.Tgbot)
+        </dd>
+        <dt class="col-sm-2">
+            備註
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model =>model.Morg.Note)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Morg.Id" />
+        <input type="submit" value="刪 除" class="btn btn-danger" /> |
+        <a asp-page="./Index">返回商戶管理</a>
+    </form>
+</div>

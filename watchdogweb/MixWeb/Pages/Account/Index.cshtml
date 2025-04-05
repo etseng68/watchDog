@@ -1,0 +1,133 @@
+﻿@page
+@model MixWeb.Pages.Account.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "account/index";
+    ViewData["Group"] = "accountGroup";
+    ViewData["user"] = this.User;
+    string[] roles = new string[] {  "網站管理員","使用者" };
+    string[] roleStyles = new string[] { "badge-success","badge-primary"};
+}
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">帳號管理</h4>
+        
+    </div>
+    <div class="pb-20 p-3">
+        <p><a asp-page="Create">建立帳號</a></p>
+        <table class="checkbox-datatable table nowrap">
+            <thead>
+                <tr>
+                    <th>帳號</th>
+                    <th>商戶</th>
+                    <th>Mail</th>
+                    <th>角色</th>
+                    <th>停用</th>
+                    <th>備註</th>
+                    <th>功能</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Maccount)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Org)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td><span class="badge @roleStyles[item.Role-1]">@roles[item.Role-1]</span></td>
+                        <td>@Html.DisplayFor(modelItem => item.Disable)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="dw dw-edit2"></i>修改</a>
+                            @*| <a asp-page="./Delete" asp-route-id="@item.Id"><i class="dw dw-delete-3"></i>刪除</a>*@
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Script{
+    <script>
+        const passwordInput = document.querySelector("#password")
+        const eye = document.querySelector("#eye")
+        eye.addEventListener("click", function () {
+            this.classList.toggle("bi-eye")
+            this.classList.toggle("bi-eye-slash")
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password"
+            passwordInput.setAttribute("type", type)
+        })
+    </script>
+}
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].ModifyAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].Org)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maccount[0].RoleNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Maccount) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifyAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Org)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleNavigation.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@

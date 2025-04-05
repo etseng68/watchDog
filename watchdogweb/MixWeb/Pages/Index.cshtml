@@ -1,0 +1,221 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+	ViewData["Page"] = "index";
+}
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+
+<div class="row">
+	<div class="card-box m-2 col">
+		<div class="pd-20">
+			<h4 class="text-blue h4">域名</h4>
+		</div>
+		<div class="pb-20">
+			<table id="main" class="display" style="width:100%">
+				<thead>
+					<tr>
+						<th>域名</th>
+						<th>商戶</th>
+						<th>監測</th>
+						
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>域名</th>
+						<th>商戶</th>
+						<th>監測</th>
+						
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<div class="card-box m-2 col">
+		<div class="pd-20">
+			<h4 id="checkUrl" class="text-blue h4">檢測:</h4>
+		</div>
+		<div class="pb-20">
+			<table id="detail" class="display" style="width:100%">
+				<thead>
+					<tr>
+						<th>狀態</th>
+						<th>時間</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>狀態</th>
+						<th>時間</th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		var mainTable = $('#main').DataTable({
+			ajax: {
+				url: '/domain/list',
+				dataSrc: ''
+			},
+			language: {
+				url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json',
+			},
+			columnDefs: [
+				{
+					targets: -1,
+					searchable: false,
+					orderable: false,
+					render: function (data, type, row, meta) {
+						var checkStu = "";
+						if(data) {checkStu ="checked";}
+						var checkbtn = '<label class="toggle">'
+							         +'<input class="toggle-checkbox" type="checkbox" '+checkStu +' >'
+								     +'<div class="toggle-switch"></div>'
+							         +'<span class="toggle-label"></span>'
+									 +'</label>';
+						
+						//'<div class="checkbox-wrapper-3">'
+						//			 +'<input type="checkbox" id="cbx-3" '+ checkStu +' />'
+						//		     +'<label for= "cbx-3" class="toggle" > <span></span></label >'
+						//			 +'</div>';
+
+						//var html = '<a href="/Domain/Edit?id=' + data + '">編輯</a> '
+						//	+ '| <a href="/Domain/Delete?id=' + data + '">刪除</a>'
+						return checkbtn;
+					}
+				}
+			],
+			columns: [
+				{ data: 'Wurl' },
+				{ data: 'Org' },
+				{ data: 'Wrun' }
+			],
+			//"rowCallback": function (row, data) {
+			//	$(row).on('click', function () {
+			//		var rowData = table.row(row).data();
+			//		alert(rowData['Wurl']); // 輸出該行的值
+			//	});
+			//}
+		});
+		var detailTable = $('#detail').DataTable({
+			ajax: {
+				url: '/watch/search',
+				dataSrc: ''
+			},
+			language: {
+				url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json',
+			},
+			columns: [
+				{ data: "Status" },
+				{ data: "WdateTime" }
+			],
+			columnDefs: [
+				{
+					targets: -1,
+					"render": function (data, type, row)
+					{
+						if (type === 'display')
+						{
+							return moment(data).format('YYYY/MM/DD HH:mm:ss');
+						}
+						return data;
+					}
+				}
+			],
+			order: [[1, 'desc']] //order 是0開始
+		});
+		$('#main tbody').on('click', 'tr', function () {
+			//alert(JSON.stringify(mainTable.row(this).data()));
+			var domain = mainTable.row(this).data()['Wurl'];
+			if ($(this).hasClass('selected')) {
+				$(this).removeClass('selected');
+			} else {
+				mainTable.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+			}
+			$("#checkUrl").text("檢測: " + domain)
+			detailTable.ajax.url('/watch/search?range=h&domain='+domain).load();
+		});
+
+		$('#button').click(function () {
+
+			mainTable.row('.selected').remove().draw(false);
+
+		});
+	});
+</script>
+
+@*<script>
+	/*參考 https://datatables.net/examples/api/row_details_stateSave.html */
+	/* Formatting function for row details - modify as you need */
+	function format(d) {
+		// `d` is the original data object for the row
+		return (
+			'<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+			'<tr>' +
+			'<td>Full name:</td>' +
+			'<td>' +
+			d.name +
+			'</td>' +
+			'</tr>' +
+			'<tr>' +
+			'<td>Extension number:</td>' +
+			'<td>' +
+			d.extn +
+			'</td>' +
+			'</tr>' +
+			'<tr>' +
+			'<td>Extra info:</td>' +
+			'<td>And any further details here (images etc)...</td>' +
+			'</tr>' +
+			'</table>'
+		);
+	}
+
+	$(document).ready(function () {
+		// Add event listener for opening and closing details
+		$('#example').on('click', 'tbody td.dt-control', function () {
+			var tr = $(this).closest('tr');
+			var row = table.row(tr);
+
+			if (row.child.isShown()) {
+				// This row is already open - close it
+				row.child.hide();
+			} else {
+				// Open this row
+				row.child(format(row.data())).show();
+			}
+		});
+
+		$('#example').on('requestChild.dt', function (e, row) {
+			row.child(format(row.data())).show();
+		});
+
+		var table = $('#example').DataTable({
+			ajax: '../ajax/data/objects.txt',
+			rowId: 'id',
+			stateSave: true,
+			columns: [
+				{
+					className: 'dt-control',
+					orderable: false,
+					data: null,
+					defaultContent: '',
+				},
+				{ data: 'name' },
+				{ data: 'position' },
+				{ data: 'office' },
+				{ data: 'salary' },
+			],
+			order: [[1, 'asc']],
+		});
+	});
+</script>*@

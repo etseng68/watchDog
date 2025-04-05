@@ -1,0 +1,50 @@
+﻿@page
+@model MixWeb.Pages.DomainLog.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>MdomainLog</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MdomainLog.Id" />
+            <div class="form-group">
+                <label asp-for="MdomainLog.DomainId" class="control-label"></label>
+                <select asp-for="MdomainLog.DomainId" class="form-control" asp-items="ViewBag.DomainId"></select>
+                <span asp-validation-for="MdomainLog.DomainId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MdomainLog.Note" class="control-label"></label>
+                <input asp-for="MdomainLog.Note" class="form-control" />
+                <span asp-validation-for="MdomainLog.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MdomainLog.UrserId" class="control-label"></label>
+                <select asp-for="MdomainLog.UrserId" class="form-control" asp-items="ViewBag.UrserId"></select>
+                <span asp-validation-for="MdomainLog.UrserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MdomainLog.CreateAt" class="control-label"></label>
+                <input asp-for="MdomainLog.CreateAt" class="form-control" />
+                <span asp-validation-for="MdomainLog.CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

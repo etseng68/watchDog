@@ -1,0 +1,71 @@
+﻿@page
+@model MixWeb.Pages.Account.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    ViewData["Page"] = "account/index";
+    ViewData["Group"] = "accountGroup";
+    ViewData["user"] = this.User;
+}
+
+<h1>修改</h1>
+
+<h4>帳號</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Maccount.Id" />
+            <div class="form-group">
+                <label asp-for="Maccount.Name" class="control-label">*帳號</label>
+                <input asp-for="Maccount.Name" class="form-control" />
+                <span asp-validation-for="Maccount.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Maccount.Password" class="control-label">*密碼</label>
+                <input asp-for="Maccount.Password" class="form-control" />
+                <span asp-validation-for="Maccount.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Maccount.Email" class="control-label">Mail</label>
+                <input asp-for="Maccount.Email" class="form-control" />
+                <span asp-validation-for="Maccount.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Maccount.Role" class="control-label">*角色(1:網站管理者,2:使用者)</label>
+                <select asp-for="Maccount.Role" class="form-control" asp-items="ViewBag.Role"></select>
+                <span asp-validation-for="Maccount.Role" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Maccount.Disable" />停用
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Maccount.Note" class="control-label">備註</label>
+                <input asp-for="Maccount.Note" class="form-control" />
+                <span asp-validation-for="Maccount.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Maccount.Org" class="control-label">商戶</label>
+                <select asp-for="Maccount.Org" class="form-control" asp-items="ViewBag.Org"></select>
+                <span asp-validation-for="Maccount.Org" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="更 新" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">返回帳號管理</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

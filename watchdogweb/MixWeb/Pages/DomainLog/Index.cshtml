@@ -1,0 +1,106 @@
+﻿@page
+@model MixWeb.Pages.DomainLog.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "domainlog/index";
+    ViewData["Group"] = "domainGroup";
+    ViewData["user"] = this.User;
+}
+<div class="card-box">
+    <div class="pd-20">
+        <h4 class="text-blue h4">域名 LOG</h4>
+
+    </div>
+    <div class="pb-20 p-3">
+        <table id="domainLogAll" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>域名</th>
+                    <th>修改人員</th>
+                    <th>修改時間</th>
+                    <th>備註</th>                    
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>域名</th>
+                    <th>修改人員</th>
+                    <th>修改時間</th>
+                    <th>備註</th>
+                </tr>
+            </tfoot>
+        </table>
+        <hr>
+    </div>
+</div>
+@section Script{
+    <script>
+        $(document).ready(function ()
+        {
+            var domainLogTable = $('#domainLogAll').DataTable({
+                ajax: {
+                    url: '/DomainLog/list',
+                    dataSrc: ''
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
+                },
+                columns: [
+                    { data: 'Wurl' },
+                    { data: 'Name' },
+                    { data: 'CreateAt' },
+                    { data: 'Note' }
+                ]
+            });
+        });
+    </script>
+    }
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MdomainLog[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MdomainLog[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MdomainLog[0].Domain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MdomainLog[0].Urser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MdomainLog) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Domain.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Urser.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@

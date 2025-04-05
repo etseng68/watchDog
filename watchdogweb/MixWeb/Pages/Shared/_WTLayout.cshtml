@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+@{
+	IgnoreSection("Scripts");
+	var user = (System.Security.Claims.ClaimsPrincipal)ViewData["user"];
+}
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" charset="utf-8"/>
+		<title>@ViewBag.Title</title>
+
+		<partial name="_WTheader.cshtml" />
+
+		
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<script src="~/vendors/scripts/script.min.js"></script>
+		<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+		@*<script src="~/vendors/scripts/watchDogCore.js"></script>
+		<script src="~/vendors/scripts/layout-settings.js"></script>*@
+
+		@*<script src="~/js/datatables.checkboxes.min.js"></script>*@
+	
+	</head>
+<body>
+
+	<partial name="_WTBodyHeader.cshtml" />
+	<partial name="_WTSetting.cshtml" />
+	@if (user.IsInRole("1"))
+	{
+		<partial name="_WTAdminMenu.cshtml" />
+	}else{
+		<partial name="_WTMenu.cshtml" />
+	}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+			<!-- multiple select row Datatable start -->
+                @RenderBody()
+			<!-- multiple select row Datatable End -->
+            </div>	
+        </div>
+    </div>
+	<partial name="_WTScript.cshtml" />
+	@RenderSection("Script", required: false)
+	
+</body>
+</html>

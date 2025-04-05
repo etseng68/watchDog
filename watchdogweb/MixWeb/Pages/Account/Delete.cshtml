@@ -1,0 +1,65 @@
+﻿@page
+@model MixWeb.Pages.Account.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    ViewData["Page"] = "account";
+    ViewData["user"] = this.User;
+    var r = Model.Maccount.Role;
+    string[] roles = new string[] { "網站管理員", "使用者" };
+    string[] roleStyles = new string[] { "badge-success", "badge-primary" };
+}
+
+<h1>刪除</h1>
+
+<h3>你確定要刪除這個帳號？</h3>
+<div>
+    <h4>帳號</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            帳號
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Maccount.Name)
+        </dd>
+        <dt class="col-sm-2">
+            密碼
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Maccount.Password)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Maccount.Email)
+        </dd>
+		<dt class="col-sm-2">
+            商戶
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Maccount.Org)
+		</dd>
+		<dt class="col-sm-2">
+            角色
+		</dt>
+		<dd class="col-sm-10">
+			@*@Html.DisplayFor(model => model.Maccount.RoleNavigation.Id)*@
+            <span class="badge @roleStyles[@r-1]">@roles[@r-1]</span>
+		</dd>
+        <dt class="col-sm-2">
+            備註
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Maccount.Note)
+        </dd>
+    </dl>
+    <form method="post">
+        <input type="hidden" asp-for="Maccount.Id" />
+        <input type="submit" value="刪 除" class="btn btn-danger" /> |
+        <a asp-page="./Index">返回帳號管理</a>
+    </form>
+</div>
+
+

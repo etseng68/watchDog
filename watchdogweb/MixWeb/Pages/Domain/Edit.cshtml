@@ -1,0 +1,118 @@
+﻿@page
+@model MixWeb.Pages.Domain.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    ViewData["Page"] = "domain/index";
+    ViewData["Group"] = "domainGroup";
+    ViewData["user"] = this.User;
+}
+<h1>修改</h1>
+
+<h4>監測</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Mdomain.Id" />
+            <input type="hidden" asp-for="Mdomain.Rtime" />
+            <input type="hidden" asp-for="Mdomain.Wact" />
+            <input type="hidden" asp-for="Mdomain.Del" />
+            <div class="form-group">
+                <label asp-for="Mdomain.Wurl" class="control-label">域名</label>
+                @* <input asp-for="Mdomain.Wurl" class="form-control" readonly='@ViewData["Url"]' /> *@
+                <textarea asp-for="Mdomain.Wurl" class="form-control"></textarea>
+                <span asp-validation-for="Mdomain.Wurl" class="text-danger"></span>
+            </div>
+@*             <div class="form-group" hidden>
+                <label asp-for="Mdomain.Wact" class="control-label">方法</label>
+                
+                <span asp-validation-for="Mdomain.Wact" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Mdomain.Org" class="control-label">商戶</label>
+                <select asp-for="Mdomain.Org" class="form-control" asp-items="ViewBag.Org"></select>
+                <span asp-validation-for="Mdomain.Org" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Mdomain.Wrun" /> 加入監測
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mdomain.Wmemo" class="control-label">備註</label>
+                <input asp-for="Mdomain.Wmemo" class="form-control" />
+                <span asp-validation-for="Mdomain.Wmemo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="存 檔" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">返回域名設置</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+@*<div class="pd-20 card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">修改監測</h4>
+        <hr />
+    </div>
+    <div class="pb-20">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Mdomain.Id" />
+
+                    <div class="form-group row">
+                        <label asp-for="Mdomain.Wurl" class="control-label col-sm-12 col-md-2 col-form-label">網址</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input asp-for="Mdomain.Wurl" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="Mdomain.Wurl" class="text-danger"></span>
+
+                    <div class="form-group row">
+                        <label asp-for="Mdomain.Org" class="control-label col-sm-12 col-md-2 col-form-label">商戶</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input asp-for="Mdomain.Org" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="Mdomain.Org" class="text-danger"></span>
+
+                    <div class="form-group row">
+                        <label asp-for="Mdomain.Wrun" class="control-label col-sm-12 col-md-2 col-form-label">檢測狀態</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input asp-for="Mdomain.Wrun" class="form-check-input" /> @Html.DisplayNameFor(model => model.Mdomain.Wrun)
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Mdomain.Wmemo" class="control-label col-sm-12 col-md-2 col-form-label">備註</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input asp-for="Mdomain.Wmemo" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="Mdomain.Wmemo" class="text-danger"></span>
+
+                    <div class="form-group">
+                        <input type="submit" value="存 檔" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <a asp-page="./index">返回域名設置</a>
+        </div>
+    </div>
+</div>*@
+

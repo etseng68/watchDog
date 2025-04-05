@@ -1,0 +1,58 @@
+﻿@page
+@model MixWeb.Pages.Org.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    ViewData["Page"] = "org/index";
+    ViewData["Group"] = "orgGroup";
+    ViewData["user"] = this.User;
+}
+<h1>修改</h1>
+
+<h4>商戶</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Morg.Id" />
+            <div class="form-group">
+                <label asp-for="Morg.Org" class="control-label">商戶</label>
+                <input asp-for="Morg.Org" class="form-control" />
+                <span asp-validation-for="Morg.Org" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Morg.Disable" />停用
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Morg.Tgbot" class="control-label">TG Bot</label>
+                <input asp-for="Morg.Tgbot" class="form-control" />
+                <span asp-validation-for="Morg.Tgbot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Morg.Note" class="control-label">備註</label>
+                <input asp-for="Morg.Note" class="form-control" />
+                <span asp-validation-for="Morg.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="存 檔" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">返回帳號管理</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+

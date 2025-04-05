@@ -1,0 +1,261 @@
+﻿@page
+@model MixWeb.Pages.Watch.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "watch/index";
+	ViewData["Group"] = "watchGroup";
+    ViewData["user"] = this.User;
+}
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Mwatch[0].Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mwatch[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mwatch[0].Wtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mwatch[0].Org)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Mwatch) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wtime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Org)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@
+
+<div class="card-box">
+@*	<div class="row pd-20">
+		<div class="col-sm">
+			<h4 class="text-blue h4">監控記錄</h4>
+		</div>
+		<div class="col-sm">
+			<h6><b>區間查詢</b></h6>
+		</div>
+		<div class="col-sm-auto">
+			域名 <input id="serchUrl" type="text" placeholder="請輸入關鍵字" />
+		</div>
+		<div class="col-sm-auto">
+			開始日期 <input id="sDate" type="text" />
+		</div>
+		<div class="col-sm-auto">
+			結束日期 <input id="eDate" type="text" />
+		</div>
+		<div class="col-sm">
+			<button id="serchBtn" type="button" class="btn btn-primary">查詢</button>
+		</div>
+	</div>
+	<hr />*@
+	<div class="pd-20">
+		<h4 class="text-blue h4">今日監測</h4>
+
+	</div>
+	<div class="pb-20 p-3">
+        <form id="frm-watchall" action="" method="POST">
+			@*<table id="watch-log-all" class="checkbox-datatable table nowrap">*@
+            <table id="watchall" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th style="text-align:center" ><input id="checkall" class="checkchild" type="checkbox" /></th>
+						<th>域名</th>
+						<th>狀態</th>
+						<th>商戶</th>
+						<th>時間</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th></th>
+						<th>域名</th>
+						<th>狀態</th>
+						<th>商戶</th>
+						<th>時間</th>
+					</tr>
+				</tfoot>
+			</table>
+			<hr>
+@*
+			<p>Press <b>Submit</b> and check console for URL-encoded form data that would be submitted.</p>
+
+			<p><button >Submit</button></p>
+
+			<p><b>Selected rows data:</b></p>
+            <pre id="watchall-console-rows"></pre>
+
+			<p><b>Form data as submitted to the server:</b></p>
+            <pre id="watchall-console-form"></pre>*@
+
+		</form>
+	</div>
+</div>
+@section Script{
+	<script>
+		$(document).ready(function () {
+
+			var watchTable = $('#watchall').DataTable({
+				dom: 'lBfrtip',
+				buttons: [
+					{
+						text: 'Select all',
+						action: function () {
+							watchTable.rows().select();
+						}
+					},
+					{
+						text: 'Select none',
+						action: function () {
+							watchTable.rows().deselect();
+						}
+					}
+				],
+				ajax: {
+					url: '/watch/list',
+					dataSrc: ''
+				},
+				language: {
+					url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
+				},
+
+				columns: [
+					{ data: null },
+					{ data: 'Url' },
+					{ data: 'Status' },
+					{ data: 'Org' },
+					{ data: 'WdateTime' }
+				],
+				columnDefs: [
+					//{
+					//	orderable: false,
+					//	className: 'select-checkbox',
+					//	targets: 0
+					//},
+					{
+						targets: 0,//代表第0行
+						searchable: false,
+						orderable: false,
+						className: 'select-checkbox',
+						//className: 'dt-body-center',
+						render: function (data, type, row) {
+							return '<input class="checkchild" type="checkbox"/>';
+						}
+					},
+					{
+						targets: -1,
+						"render": function (data, type, row)
+						{
+							if (type === 'display')
+							{
+								return moment(data).format('YYYY/MM/DD HH:mm:ss');
+							}
+							return data;
+						}
+					}
+				],
+				select: {
+					style: 'multi',
+					selector: 'td:first-child'
+				},
+				order: [[1, 'asc']]
+			});
+		});
+
+	</script>
+}
+
+
+@*<script>
+    $(document).ready(function () {
+        var watchAllTable = $('#watchall').DataTable({
+			"ajax": {
+				url: "/watch/list?domain=all",
+				dataSrc: ""
+			},
+			"language": {
+				url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json",
+			},
+			"columns": [
+				{ "data": "Id" },
+				{ "data": "Url" },
+				{ "data": "Status" },
+				{ "data": "Wtime" }
+			],
+			"columnDefs": [
+				{
+					"targets": 0,
+					"checkboxes": {
+						'selectRow': true
+					}
+				}
+            ],
+			"select": "multi",
+			"order": [[1, "asc"]]
+		});
+        // Handle form submission event
+        $('#frm-watchall').on('submit', function (e) {
+        //$('#checkbtn').on('click', function (e) {
+            
+            var form = this;
+            
+            var rows_selected = watchAllTable.column(0).checkboxes.selected();
+
+            // Iterate over all selected checkboxes
+            $.each(rows_selected, function (index, rowId) {
+                // Create a hidden element
+                $(form).append(
+                    $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'id[]')
+                        .val(rowId)
+                );
+            });
+           
+            // FOR DEMONSTRATION ONLY
+            // The code below is not needed in production
+
+            // Output form data to a console
+            $('#watchall-console-rows').text(rows_selected.join(","));
+
+            // Output form data to a console
+            $('#watchall-console-form').text($(form).serialize());
+
+            // Remove added elements
+            $('input[name="id\[\]"]', form).remove();
+
+            // Prevent actual form submission
+            e.preventDefault();
+           
+        });
+    });
+</script>*@

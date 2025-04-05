@@ -1,0 +1,204 @@
+﻿@page
+@model MixWeb.Pages.Domain.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "domain/index";
+    ViewData["Group"] = "domainGroup";
+    ViewData["user"] = this.User;
+}
+
+<div class="card-box">
+    <div class="pd-20">
+        <h4 class="text-blue h4">域名清單</h4>
+        
+    </div>
+	<div class="pb-20 p-3">
+		<p><a asp-page="Create">新增監測</a></p>
+        <table id="domainall" class="display" cellspacing="0" width="100%">
+			<thead>
+				<tr>				
+					<th>域名</th>
+					<th>監測</th>
+					<th>建立時間</th>
+					<th>備註</th>
+                    <th></th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>					
+					<th>域名</th>
+					<th>監測</th>
+					<th>建立時間</th>
+					<th>備註</th>
+                    <th></th>
+				</tr>
+			</tfoot>
+		</table>
+		<hr>
+	</div>
+</div>
+@section Script{
+	<script>
+		$(document).ready(function () {
+			var domainTable = $('#domainall').DataTable({
+				ajax: {
+					url: '/domain/list?domain=all',
+					dataSrc: ''
+				},
+				language: {
+					url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
+				},
+                columnDefs: [
+                    {
+                        targets: -1,
+                        searchable: false,
+                        orderable: false,
+                        render: function (data, type, row, meta) {
+                            var html = '<a href="/Domain/Edit?id=' + data + '">編輯</a> '
+                                     + '| <a href="/Domain/Delete?id=' + data + '">刪除</a>'
+                            return html;
+                        }
+                    },
+                    {
+                        targets: 1,
+                        searchable: false,
+                        orderable: false,
+                        render: function (data, type, row, meta)
+                        {
+                            var checkStu = "";
+                            if (data) { checkStu = "checked"; }
+                            var checkbtn = '<label class="toggle">'
+                                + '<input class="toggle-checkbox" type="checkbox" ' + checkStu + ' >'
+                                + '<div class="toggle-switch"></div>'
+                                + '<span class="toggle-label"></span>'
+                                + '</label>';
+                            return checkbtn;
+                        }
+                    },
+                    {
+                        targets: 2,
+                        "render": function (data, type, row)
+                        {
+                            if (type === 'display')
+                            {
+                                return moment(data).format('YYYY/MM/DD HH:mm:ss');
+                            }
+                            return data;
+                        }
+                    }
+                ],
+				columns: [
+					{ data: 'Wurl' },
+					{ data: 'Wrun' },
+					{ data: 'CreateAt' },
+					{ data: 'Wmemo' },
+                    { data: 'Id'}
+                    
+				]
+			});
+		});
+	</script>
+    }
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Wname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Wurl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Rtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Etime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Wssl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Essl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Wact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Wmemo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Wrun)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].ModifyAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].Del)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mdomain[0].OrgNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Mdomain) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wurl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rtime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wssl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Essl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wmemo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wrun)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifyAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Del)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrgNavigation.Org)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@

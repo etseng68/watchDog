@@ -1,0 +1,93 @@
+﻿@page
+@model MixWeb.Pages.OrgLog.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "orglog/index";
+    ViewData["Group"] = "orgGroup";
+    ViewData["user"] = this.User;
+}
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">商戶管理</h4>
+
+    </div>
+    <div class="pb-20 p-3">
+        <p><a asp-page="Create">建立商戶</a></p>
+        <table class="checkbox-datatable table nowrap">
+            <thead>
+                <tr>
+                    <th>商戶</th>
+                    <th>修改人員</th>
+                    <th>修改時間</th>
+                    <th>備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MorgLog)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Org.Org)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CreateAt)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MorgLog[0].UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MorgLog[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MorgLog[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MorgLog[0].Org)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MorgLog[0].OrgNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MorgLog) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Org.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrgNavigation.Org)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@

@@ -1,0 +1,43 @@
+﻿@page
+@model MixWeb.Pages.DomainLog.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MdomainLog</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MdomainLog.Note)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MdomainLog.Note)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MdomainLog.CreateAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MdomainLog.CreateAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MdomainLog.Domain)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MdomainLog.Domain.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MdomainLog.Urser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MdomainLog.Urser.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.MdomainLog?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

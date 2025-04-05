@@ -1,0 +1,49 @@
+﻿@page
+@model MixWeb.Pages.Watch.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Mwatch</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Mwatch.Url" class="control-label"></label>
+                <input asp-for="Mwatch.Url" class="form-control" />
+                <span asp-validation-for="Mwatch.Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mwatch.Status" class="control-label"></label>
+                <input asp-for="Mwatch.Status" class="form-control" />
+                <span asp-validation-for="Mwatch.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mwatch.Wtime" class="control-label"></label>
+                <input asp-for="Mwatch.Wtime" class="form-control" />
+                <span asp-validation-for="Mwatch.Wtime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mwatch.Org" class="control-label"></label>
+                <input asp-for="Mwatch.Org" class="form-control" />
+                <span asp-validation-for="Mwatch.Org" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

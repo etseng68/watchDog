@@ -1,0 +1,88 @@
+﻿@page
+@model MixWeb.Pages.AccountLog.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "accountlog/index";
+    ViewData["Group"] = "accountGroup";
+    ViewData["user"] = this.User;
+}
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">登入 LOG</h4>
+
+    </div>
+    <div class="pb-20 p-3">        
+        <table class="checkbox-datatable table nowrap">
+            <thead>
+                <tr>
+                    <th>帳號</th>
+                    <th>登入IP</th>
+                    <th>登入時間</th>         
+                    <th>備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MaccessLog)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.User.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserIp)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LogTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                       
+                      
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaccessLog[0].LoginTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaccessLog[0].UserIp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaccessLog[0].LogoutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaccessLog[0].User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MaccessLog) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoginTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserIp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogoutTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@

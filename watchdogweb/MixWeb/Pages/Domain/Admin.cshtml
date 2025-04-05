@@ -1,0 +1,119 @@
+﻿@page
+@model MixWeb.Pages.Domain.AdminModel
+@{
+    ViewData["Title"] = "Admin";
+    ViewData["Page"] = "domain/admin";
+    ViewData["Group"] = "domainGroup";
+    ViewData["user"] = this.User;
+}
+<div class="card-box">
+    <div class="pd-20">
+        <h4 class="text-blue h4">進階功能</h4>
+
+    </div>
+    <div class="pb-20 p-3">
+        <p><a asp-page="Create">新增監測</a></p>
+        <table id="domainall" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>域名</th>
+                    <th>監測中</th>
+                    <th>商戶</th>
+                    <th>刪除</th>
+                    <th>修改時間</th>
+                    <th>備註</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>域名</th>
+                    <th>監測</th>
+                    <th>商戶</th>
+                    <th>刪除</th>
+                    <th>修改時間</th>
+                    <th>備註</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+        <hr>
+    </div>
+</div>
+@section Script{
+    <script>
+        $(document).ready(function ()
+        {
+            var domainTable = $('#domainall').DataTable({
+                ajax: {
+                    url: '/Domain/Search',
+                    dataSrc: ''
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
+                },
+                columnDefs: [
+                    {
+                        targets: -1,
+                        searchable: false,
+                        orderable: false,
+                        render: function (data, type, row, meta)
+                        {
+                            var html = '<a href="/Domain/Edit?id=' + data + '">編輯</a> '
+                                + '| <a href="/Domain/AdminDel?id=' + data + '">刪除</a>'
+                            return html;
+                        }
+                    },
+                    {
+                        targets: 1,
+                        searchable: false,
+                        orderable: false,
+                        render: function (data, type, row, meta)
+                        {
+                            var checkStu = "";
+                            if (data) { checkStu = "checked"; }
+                            var checkbtn = '<label class="toggle">'
+                                + '<input class="toggle-checkbox" type="checkbox" ' + checkStu + ' >'
+                                + '<div class="toggle-switch"></div>'
+                                + '<span class="toggle-label"></span>'
+                                + '</label>';
+                            return checkbtn;
+                        }
+                    }, 
+                    {
+                        targets: 3,
+                        searchable: false,
+                        orderable: false,
+                        render: function (data, type, row, meta)
+                        {
+                            var checkStu = "";
+                            if (data) { checkStu = "checked"; }
+                            var checkbtn = '<input type="checkbox" disabled ' + checkStu + ' >';        
+                            return checkbtn;
+                        }
+                    },
+                    {
+                        targets: 4,
+                        "render": function (data, type, row)
+                        {
+                            if (type === 'display')
+                            {
+                                return moment(data).format('YYYY/MM/DD HH:mm:ss');
+                            }
+                            return data;
+                        }
+                    }
+                ],
+                columns: [
+                    { data: 'Wurl' },
+                    { data: 'Wrun' },
+                    { data: 'Org' },
+                    { data: 'Del' },
+                    { data: 'ModifyAt' },
+                    { data: 'Wmemo' },
+                    { data: 'Id' }
+                ]
+            });
+        });
+    </script>
+    }

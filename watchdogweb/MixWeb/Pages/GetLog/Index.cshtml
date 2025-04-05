@@ -1,0 +1,167 @@
+﻿@page
+@model MixWeb.Pages.GetLog.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Page"] = "getlog/index";
+    ViewData["Group"] = "watchGroup";
+    ViewData["user"] = this.User;
+}
+<div class="card-box">
+	<div class="pd-20">
+		<h4 class="text-blue h4">監測 LOG</h4>
+	</div>
+	<div class="pb-20 p-3">
+		<form id="frm-getLogAll" action="" method="POST">
+			@*<table id="watch-log-all" class="checkbox-datatable table nowrap">*@
+			<table id="getLogAll" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th style="text-align:center"><input id="checkall" class="checkchild" type="checkbox" /></th>
+						<th>時間</th>
+						<th>LOG</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th></th>
+						<th>時間</th>
+						<th>LOG</th>
+					</tr>
+				</tfoot>
+			</table>
+			<hr>
+		</form>
+	</div>
+</div>
+@section Script{
+	<script>
+		$(document).ready(function ()
+		{
+
+			var getLogTable = $('#getLogAll').DataTable({
+				dom: 'lBfrtip',
+				buttons: [
+					{
+						text: 'Select all',
+						action: function ()
+						{
+							getLogTable.rows().select();
+						}
+					},
+					{
+						text: 'Select none',
+						action: function ()
+						{
+							getLogTable.rows().deselect();
+						}
+					}
+				],
+				ajax: {
+					url: '/GetLog/list',
+					dataSrc: ''
+				},
+				language: {
+					url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
+				},
+
+				columns: [
+					{ data: null },
+					{ data: 'ModiyAt' },
+					{ data: 'Note' }
+				],
+				columnDefs: [
+					//{
+					//	targets: 0,
+					//	orderable: false,
+					//	className: 'select-checkbox'
+						
+					//},
+					{
+						targets: 0,//代表第0行
+						searchable: false,
+						orderable: false,
+						//className: 'dt-body-center',
+						className: 'select-checkbox',
+						render: function (data, type, row)
+						{
+							//return '<input class="checkchild" type="checkbox"/>';
+							return '';
+						}
+					},
+					{
+						targets: 1,
+						"render": function (data, type, row)
+						{
+							if (type === 'display')
+							{
+								return moment(data).format('YYYY/MM/DD HH:mm:ss');
+							}
+							return data;
+						}
+					},
+					{
+						"targets": -1,
+						"render": function (data, type, row, meta)
+						{
+							if (type === 'display')
+							{
+								return data.replace(/(\r\n)/g, '<br/>');
+							}
+							return data;
+						}
+					}
+				],
+				select: {
+					style: 'multi',
+					selector: 'td:first-child'
+				},
+				order: [[1, 'desc']]
+			});
+		});
+
+	</script>
+}
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MgetLog[0].CreateAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MgetLog[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MgetLog[0].ModiyAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MgetLog) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModiyAt)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@

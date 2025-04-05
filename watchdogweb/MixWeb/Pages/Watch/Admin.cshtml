@@ -1,0 +1,149 @@
+﻿@page
+@model MixWeb.Pages.Watch.AdminModel
+@{
+	ViewData["Title"] = "Admin";
+	ViewData["Page"] = "watch/admin";
+	ViewData["Group"] = "watchGroup";
+	ViewData["user"] = this.User;
+}
+
+
+<div class="card-box">
+	<div class="row pd-20">
+		<div class="col-sm">
+			<h4 class="text-blue h4">進階查詢</h4>
+		</div>
+		<div class="col-sm">
+			<h6><b>區間查詢</b></h6>
+		</div>
+		<div class="col-sm-auto">
+			域名 <input id="serchUrl" type="text" placeholder="請輸入關鍵字" />
+		</div>
+		<div class="col-sm-auto">
+			開始日期 <input id="sDate" type="text" />
+		</div>
+		<div class="col-sm-auto">
+			結束日期 <input id="eDate" type="text" />
+		</div>
+		<div class="col-sm">
+			<button id="serchBtn" type="button" class="btn btn-primary">查詢</button>
+		</div>
+	</div>
+	<hr />
+	<div class="pb-20 p-3">
+		<form id="frm-watchall" action="" method="POST">
+			@*<table id="watch-log-all" class="checkbox-datatable table nowrap">*@
+			<table id="watchall" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th style="text-align:center"><input id="checkall" class="checkchild" type="checkbox" /></th>
+						<th>域名</th>
+						<th>狀態</th>
+						<th>商戶</th>
+						<th>時間</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th></th>
+						<th>域名</th>
+						<th>狀態</th>
+						<th>商戶</th>
+						<th>時間</th>
+					</tr>
+				</tfoot>
+			</table>
+			<hr>
+		</form>
+	</div>
+</div>
+@section Script{
+	<script>
+		new AirDatepicker('#sDate', { locale: zh });
+		new AirDatepicker('#eDate', { locale: zh });
+		$(document).ready(function ()
+		{
+			var sday = new Date();
+			var eday = new Date();
+			sday.setDate(sday.getDate() - 1);
+			//var d = day.format('yyyy-MM-dd');
+			var watchTable = $('#watchall').DataTable({
+				dom: 'lBfrtip',
+				buttons: [
+					{
+						text: 'Select all',
+						action: function ()
+						{
+							watchTable.rows().select();
+						}
+					},
+					{
+						text: 'Select none',
+						action: function ()
+						{
+							watchTable.rows().deselect();
+						}
+					}
+				],
+				ajax: {
+					url: '/watch/list',
+					dataSrc: ''
+				},
+				language: {
+					url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
+				},
+				columns: [
+					{ data: null },
+					{ data: 'Url' },
+					{ data: 'Status' },
+					{ data: 'Org' },
+					{ data: 'WdateTime' }
+				],
+				columnDefs: [
+					//{
+					//	orderable: false,
+					//	className: 'select-checkbox',
+					//	targets: 0
+					//},
+					{
+						targets: 0,//代表第0行
+						searchable: false,
+						orderable: false,
+						//className: 'dt-body-center',
+						className: 'select-checkbox',
+						render: function (data, type, row)
+						{
+							return '<input class="checkchild" type="checkbox"/>';
+						}
+					}, 
+					{
+						targets: -1,
+						"render": function (data, type, row)
+						{
+							if (type === 'display')
+							{
+								return moment(data).format('YYYY/MM/DD HH:mm:ss');
+							}
+							return data;
+						}
+					}
+				],
+				select: {
+					style: 'multi',
+					selector: 'td:first-child'
+				},
+				order: [[1, 'asc']] //order 是0開始
+			});
+			$('#sDate').val(sday.format('yyyy-MM-dd'));
+			$('#eDate').val(eday.format('yyyy-MM-dd'));
+			$('#serchBtn').click(function ()
+			{
+				var domin = $('#serchUrl').val();				
+				var start = $('#sDate').val();			
+				var end = $('#eDate').val();				
+				watchTable.ajax.url('/watch/search?domain=' + domin + "&start=" + start + "&end=" + end).load();
+			});
+		});
+
+	</script>
+}
