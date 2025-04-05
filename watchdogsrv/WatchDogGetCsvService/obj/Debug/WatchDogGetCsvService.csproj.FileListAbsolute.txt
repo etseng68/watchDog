@@ -1,0 +1,10 @@
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\bin\Debug\WatchDogGetCsvService.exe.config
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\bin\Debug\WatchDogGetCsvService.exe
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\bin\Debug\WatchDogGetCsvService.pdb
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.ProjectInstaller.resources
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.WatchDogCsv2Sql.resources
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.csproj.GenerateResource.cache
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.exe
+C:\Users\Administrator\source\watchdogsrv-master\WatchDogGetCsvService\obj\Debug\WatchDogGetCsvService.pdb
